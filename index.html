@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Missing You From The Heart</title>
+  <link href="https://fonts.googleapis.com/css?family=Sacramento:400|Poppins:400,700&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --main-pink: #ffe8f0;
+    --main-purple: #b39ddb;
+    --main-heart: #ff6f91;
+    --main-cloud: #f4f5fa;
+    --font-header: 'Sacramento', cursive;
+    --font-body: 'Poppins', sans-serif;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--main-pink) 0%, var(--main-purple) 100%);
+    min-height: 100vh;
+    font-family: var(--font-body);
+    color: #4a0036;
+    overflow-x: hidden;
+  }
+  .main-content {
+    max-width: 100vw;
+    min-height: 80vh;
+    padding: 3vw 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .page {
+    display: none;
+    width: 97vw;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 60vh;
+    position: relative;
+    animation: fadeIn 1.1s;
+  }
+  .page.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+  .home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+    gap: 2em;
+  }
+  .dream-title {
+    font-family: var(--font-header);
+    font-size: 3.5em;
+    color: #ad1457;
+    text-shadow: 0 6px 24px #ffb7c533;
+    margin: 0;
+    letter-spacing: 2px;
+  }
+  .hero-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 6px 30px #91267e22;
+    border: 6px solid #fff;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 12px #b39ddb88);
+    background: #fff;
+  }
+  .dream-sub {
+    font-size: 1.4em;
+    color: #6c0b36;
+    font-weight: 500;
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+    border-radius: 18px;
+    padding: 1em 2em;
+    background: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 10px #ffb7c540;
+  }
+  .hearts-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .heart-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2em;
+    margin-top: 2em;
+    min-height: 60vh;
+    position: relative;
+  }
+  .big-heart {
+    width: 120px;
+    height: 110px;
+    background: var(--main-heart);
+    position: relative;
+    border-radius: 60px 60px 0 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 5px 60px #ff6f9155;
+    margin-bottom: 1em;
+    animation: pulse 1.6s infinite;
+  }
+  .big-heart:before,
+  .big-heart:after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 110px;
+    background: var(--main-heart);
+    border-radius: 60px 60px 0 0;
+  }
+  .big-heart:before {
+    left: 60px;
+    top: 0;
+  }
+  .big-heart:after {
+    left: 0;
+    top: -60px;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(-45deg);}
+    50% { transform: scale(1.11) rotate(-45deg);}
+  }
+  .petals {
+    position: absolute;
+    top: 80px; left: 50%; transform: translateX(-50%);
+    width: 220px; height: 120px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .thoughts {
+    margin-top: 2.5em;
+    font-size: 1.3em;
+    color: #a32c5d;
+    text-align: center;
+    font-family: var(--font-header);
+    background: rgba(255,255,255,0.61);
+    border-radius: 22px;
+    padding: 1.3em 2em;
+    box-shadow: 0 2px 18px #b39ddb33;
+    letter-spacing: 1px;
+    line-height: 1.7;
+    border: 2px solid #ffd6e0;
+    box-shadow: 0 2px 20px #ff6f9110;
+  }
+  #gallery h2 {
+    font-family: var(--font-header);
+    color: #ad1457;
+    font-size: 2.2em;
+    margin-bottom: 0.5em;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+    gap: 1.2em;
+    padding: 1em 0.7em;
+    margin: 0 auto;
+    max-width: 850px;
+  }
+  .gallery-grid img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 3px 20px #b39ddb44;
+    transition: transform 0.22s cubic-bezier(.57,1.47,.63,.86), box-shadow 0.2s;
+    cursor: pointer;
+    border: 4px solid #fff;
+    background: #fff;
+  }
+  .gallery-grid img:hover {
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 6px 28px #ff6f9188;
+    border: 4px solid #ff6f91;
+  }
+  /* Scrapbook page */
+  #scrapbook h2 {
+    font-family: var(--font-header);
+    color: #ad1457;
+    font-size: 2.15em;
+    margin-bottom: 0.5em;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+  .scrapbook-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+    padding: 2em 0 1em 0;
+  }
+  .scrapbook-img-frame {
+    position: relative;
+    width: 150px;
+    height: 130px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px #b39ddb22;
+    cursor: pointer;
+    transition: transform 0.19s, box-shadow 0.19s;
+    border: 3px solid #ffd6e0;
+    overflow: hidden;
+  }
+  .scrapbook-img-frame:hover {
+    transform: scale(1.06) rotate(-2deg);
+    box-shadow: 0 8px 32px #ff6f9199;
+    border: 3px solid #ff6f91;
+  }
+  .scrapbook-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    filter: brightness(0.96) contrast(1.06);
+    background: #fff;
+  }
+  .scrapbook-caption {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(255,255,255,0.74);
+    color: #ad1457;
+    font-size: 1.12em;
+    font-family: var(--font-header);
+    padding: 0.22em 0;
+    border-radius: 0 0 14px 14px;
+    pointer-events: none;
+  }
+  /* Scrapbook popup */
+  .popup-bg {
+    position: fixed;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(255, 240, 250, 0.85);
+    z-index: 1002;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.7s;
+  }
+  .popup-bg.active {
+    display: flex;
+  }
+  .popup-content {
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 8px 42px #b39ddb77;
+    padding: 2em 1.2em 1.2em 1.2em;
+    text-align: center;
+    max-width: 94vw;
+    max-height: 92vh;
+    position: relative;
+    animation: popupIn 0.45s cubic-bezier(.57,1.47,.63,.86);
+  }
+  @keyframes popupIn {
+    0% { transform: scale(0.85) translateY(50px); opacity: 0;}
+    100% { transform: scale(1) translateY(0); opacity: 1;}
+  }
+  .popup-close {
+    position: absolute;
+    top: 16px; right: 24px;
+    background: #ffeef8;
+    color: #c2185b;
+    border: none;
+    font-size: 2.2em;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0 12px;
+    z-index: 2;
+    box-shadow: 0 2px 10px #ffb7c522;
+    transition: background 0.17s;
+  }
+  .popup-close:hover {
+    background: #ffd6e0;
+  }
+  .popup-img-cloud {
+    width: 320px;
+    max-width: 80vw;
+    margin: 1.5em auto 0 auto;
+    display: block;
+    position: relative;
+  }
+  .popup-message {
+    margin: 1.1em 0 0 0;
+    font-size: 1.24em;
+    font-family: 'Sacramento', cursive;
+    color: #b00055;
+    background: #fff4fa;
+    border-radius: 16px;
+    padding: 1.1em 1.2em;
+    box-shadow: 0 2px 18px #ff6f911f;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+  /* Cloud frame for dreams page */
+  .clouds-gallery-container {
+    position: relative;
+    min-height: 310px;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    width: 100%;
+    height: 360px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+  .cloud-frame {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 120px;
+    background: transparent;
+    z-index: 2;
+    animation: floatclouds 5s infinite alternate;
+    transition: filter 0.3s;
+  }
+  .cloud-frame-svg {
+    position: absolute;
+    left: 0; top: 0;
+    width: 170px;
+    height: 120px;
+    z-index: 1;
+    filter: drop-shadow(0 4px 16px #a29ad6a0);
+    opacity: 0.72;
+    pointer-events: none;
+  }
+  .cloud-frame-img {
+    width: 96px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 22px;
+    box-shadow: 0 3px 20px #bbb8e666;
+    border: 5px solid #fff;
+    position: relative;
+    background: #fff;
+    margin-left: 34px;
+    margin-top: 19px;
+    z-index: 2;
+    filter: brightness(1.09) contrast(1.08);
+    transition: box-shadow 0.5s, border 0.5s;
+  }
+  @keyframes floatclouds {
+    0% { transform: translateY(0px) scale(1);}
+    50% { transform: translateY(-18px) scale(1.04);}
+    100% { transform: translateY(0px) scale(1);}
+  }
+  .clouds-caption {
+    position: absolute;
+    bottom: 5px; left: 0; width: 100%;
+    text-align: center;
+    font-family: var(--font-header);
+    font-size: 1.1em;
+    color: #ad1457;
+    text-shadow: 0 2px 14px #fff8;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #dream {
+    background: linear-gradient(140deg, #f7eafe 70%, #ffe6f6 100%);
+    border-radius: 28px;
+    box-shadow: 0 3px 40px #b39ddb33;
+    margin-bottom: 2em;
+  }
+  #music-control {
+    position: fixed;
+    right: 26px;
+    bottom: 22px;
+    z-index: 99;
+    background: #fff6;
+    border-radius: 50%;
+    box-shadow: 0 1px 16px #b39ddb44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #music-toggle {
+    border: none;
+    background: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #9c27b0;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+  #music-toggle:hover {
+    background: #ff6f9122;
+  }
+  .floating-hearts {
+    position: fixed;
+    left: 0; top: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .page-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 1.8em;
+    margin: 2.5em auto 0 auto;
+    position: relative;
+    z-index: 5;
+  }
+  .switch-btn {
+    background: linear-gradient(90deg, #ffb7c5 80%, #f8bbd0 100%);
+    color: #b00055;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 1.23em;
+    border: none;
+    border-radius: 1.5em;
+    padding: 0.5em 1.7em;
+    margin: 0 0.1em;
+    box-shadow: 0 2px 10px #ff6f9140;
+    cursor: pointer;
+    transition: background 0.19s, color 0.16s, transform 0.17s;
+    outline: none;
+  }
+  .switch-btn:active {
+    background: #ffc2d8;
+    color: #b00055;
+    transform: scale(0.98);
+  }
+  .switch-btn:disabled {
+    background: #fce4ec;
+    color: #bdbdbd;
+    cursor: not-allowed;
+  }
+  @media (max-width: 650px) {
+    .hero-img { width: 110px; height: 110px;}
+    .gallery-grid img { height: 88px;}
+    .letter-content { padding: 1em 0.3em;}
+    .switch-btn { font-size: 0.93em; padding: 0.42em 1.1em;}
+    .cloud-frame-svg { width: 95px; height: 50px;}
+    .cloud-frame { width: 95px; height: 50px;}
+    .cloud-frame-img { width: 44px; height: 32px; margin-left: 15px; margin-top: 6px;}
+    .popup-img-cloud { width: 80vw; min-width: 40vw; }
+  }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" src="https://files.catbox.moe/y2ueft" autoplay loop></audio>
+  <div id="music-control">
+    <button id="music-toggle" title="Play/Pause Music">🔊</button>
+  </div>
+  <div class="main-content">
+    <!-- Page 1: Home -->
+    <section id="home" class="page active">
+      <div class="hearts-bg"></div>
+      <div class="home-content">
+        <h1 class="dream-title">Missing You From The Heart ❤️‍🩹</h1>
+        <img src="https://i.ibb.co/355SRZ0/74022-DD7-8-A77-499-B-AD48-B434418-A07-DF.png" alt="Her Portrait" class="hero-img fade-in">
+        <p class="dream-sub">Every night my heart whispers your name, and every morning I wake up missing you more. Some loves are felt deeper than words and some souls are missed like air itself. This page is a piece of my heart, missing you in every beat. <span style="font-size:1.4em;">❤️‍🩹</span></p>
+      </div>
+    </section>
+    <!-- Page 2: Inside My Heart -->
+    <section id="inside" class="page">
+      <div class="heart-center">
+        <div class="big-heart"></div>
+        <div class="petals"></div>
+        <div class="thoughts">
+          <p>There are moments when my heart aches for you beyond what words can hold.</p>
+          <p>Sometimes I smile, but deep inside, I wish you could see how much I miss you.</p>
+          <p>My days are painted with memories, my nights with dreams of you.</p>
+          <p>Your absence has left a gentle emptiness that echoes inside my soul.</p>
+          <p>Missing you is a silent song my heart plays on repeat. ❤️‍🩹</p>
+        </div>
+      </div>
+    </section>
+    <!-- Page 3: Gallery -->
+    <section id="gallery" class="page">
+      <h2>Our Heartfelt Moments</h2>
+      <div class="gallery-grid"></div>
+    </section>
+    <!-- Page 4: Scrapbook -->
+    <section id="scrapbook" class="page">
+      <h2>Scrapbook Memories</h2>
+      <div style="text-align:center;color:#7b1fa2;font-family:'Poppins',sans-serif;max-width:480px;margin:0 auto 1em auto;font-size:1.1em;line-height:1.5;">
+        Tap a photo to reveal a heartwarming note and magical effects.<br>
+        Each moment, a treasure in my heart.
+      </div>
+      <div class="scrapbook-grid" id="scrapbook-grid"></div>
+    </section>
+    <!-- Page 5: Dreaming Clouds Gallery -->
+    <section id="dream" class="page">
+      <div style="padding:1.3em 0 0 0;">
+        <h2 style="font-family:'Sacramento',cursive;text-align:center;font-size:2.2em;color:#ad1457;margin-bottom:0.2em;letter-spacing:1px;">Dreaming Of You In Clouds</h2>
+        <div style="text-align:center;color:#7b1fa2;font-family:'Poppins',sans-serif;max-width:480px;margin:0 auto 1em auto;font-size:1.17em;line-height:1.6;">
+          In my dreams, you float gently in clouds of hope, love, and longing.<br>
+          Every image is a memory, every cloud a piece of my heart holding you close. ❤️‍🩹
+        </div>
+      </div>
+      <div class="clouds-gallery-container" id="clouds-gallery"></div>
+    </section>
+    <!-- Page Switcher Buttons -->
+    <div class="page-switcher">
+      <button class="switch-btn" id="next-btn">Inside My Heart &rarr;</button>
+    </div>
+  </div>
+  <div class="floating-hearts"></div>
+  <!-- Scrapbook popup -->
+  <div class="popup-bg" id="popup-bg">
+    <div class="popup-content" id="popup-content">
+      <button class="popup-close" id="popup-close" title="Close Popup">&times;</button>
+      <svg class="cloud-frame-svg popup-img-cloud" viewBox="0 0 170 120">
+        <ellipse cx="90" cy="80" rx="70" ry="35" fill="#f4f5fa"/>
+        <ellipse cx="60" cy="60" rx="35" ry="23" fill="#f4f5fa" opacity="0.85"/>
+        <ellipse cx="120" cy="60" rx="30" ry="20" fill="#f4f5fa" opacity="0.85"/>
+      </svg>
+      <img id="popup-img" class="cloud-frame-img popup-img-cloud" src="" alt="Popup Image">
+      <div class="popup-message" id="popup-message"></div>
+    </div>
+  </div>
+  <div class="floating-hearts"></div>
+  <script>
+  // IMAGES and scrapbook messages for each image
+  const IMAGES = [
+    "https://i.ibb.co/355SRZ0/74022-DD7-8-A77-499-B-AD48-B434418-A07-DF.png",
+    "https://i.ibb.co/WvTJngyF/IMG-3728.jpg",
+    "https://i.ibb.co/KpsGm4vX/IMG-3719.jpg",
+    "https://i.ibb.co/CKhgtwML/IMG-3722.jpg",
+    "https://i.ibb.co/npc9JH6/IMG-3721.jpg",
+    "https://i.ibb.co/r2BNN3pd/IMG-1599.jpg",
+    "https://i.ibb.co/Fb83nb9Q/IMG-3718.jpg",
+    "https://i.ibb.co/fGX91P8H/IMG-3713.jpg",
+    "https://i.ibb.co/7Jcmj22X/IMG-3716.jpg",
+    "https://i.ibb.co/tp6zJsDj/IMG-3682.jpg",
+    "https://i.ibb.co/5WRx6YDq/IMG-2266.jpg",
+    "https://i.ibb.co/HD2bK0Vv/IMG-2265.jpg",
+    "https://i.ibb.co/jvrMb9FH/IMG-2263.jpg",
+    "https://i.ibb.co/VWfMhxCS/IMG-2259.jpg",
+    "https://i.ibb.co/Q367r5tW/IMG-2255.jpg",
+    "https://i.ibb.co/4nTPpmZQ/IMG-2254.jpg",
+    "https://i.ibb.co/jvbkPVcB/IMG-2264.jpg",
+    "https://i.ibb.co/wZvmRC2C/IMG-8843.jpg",
+    "https://i.ibb.co/G47Wzv8j/IMG-8588.jpg",
+    "https://i.ibb.co/0j2DPCmH/IMG-8587.jpg",
+    "https://i.ibb.co/qYDTCrRw/IMG-8586.jpg",
+    "https://i.ibb.co/84BZV7Yx/3-FAA830-C-C295-4319-BEAA-A0-FEB5-BF62-AC.jpg",
+    "https://i.ibb.co/0j5t9PX7/98ba4001-e267-49c5-83e9-69a4979e1ed1.jpg",
+    "https://i.ibb.co/bySjLVz/939b3a43-cfeb-4486-a9b0-dc0daca955eb.jpg",
+    "https://i.ibb.co/dsQ1dY9P/IMG-4088.jpg",
+    "https://i.ibb.co/Hf82JCpg/IMG-4089.jpg",
+    "https://i.ibb.co/Hpxcw67v/IMG-4085.jpg",
+    "https://i.ibb.co/vCZQ92Wg/IMG-4083.jpg",
+    "https://i.ibb.co/DPwKfwVL/IMG-2258.jpg",
+    "https://i.ibb.co/MFbcpns/IMG-2252.jpg",
+    "https://i.ibb.co/Vc8m0bYz/IMG-2251.jpg",
+    "https://i.ibb.co/1G5FWLMK/IMG-2256.jpg"
+  ];
+  // Heartwarming scrapbook messages: Can be customized per image!
+  const SCRAPBOOK_MESSAGES = [
+    "Your smile is my sunshine on the darkest days.",
+    "The world feels right when you are near.",
+    "I cherish every moment spent with you.",
+    "Your laughter is my favorite melody.",
+    "You’re the missing piece to every puzzle in my life.",
+    "With you, every memory is golden.",
+    "Dreaming of you is my sweetest escape.",
+    "Your presence turns ordinary days into magic.",
+    "Love is spelled in your name in my heart.",
+    "Every moment with you is a blessing.",
+    "Your hugs are my safe haven.",
+    "I love you more than words can say.",
+    "You are my heart’s gentle rhythm.",
+    "Every day with you is a new adventure.",
+    "Your love colors my world in beautiful hues.",
+    "I see you in every beautiful thing.",
+    "With you, time stands still.",
+    "Your touch lingers in my dreams.",
+    "Thank you for being my everything.",
+    "You are the poem my heart keeps writing.",
+    "You’re my reason to believe in love.",
+    "My soul smiles when I think of you.",
+    "You are the warmth in my coldest days.",
+    "You’re the wish I make on every star.",
+    "My heart is always whispering your name.",
+    "You are the calm in my storm.",
+    "You are my forever and always.",
+    "Your eyes are my favorite view.",
+    "You are the home my heart found.",
+    "I fall for you more every day.",
+    "You are the dream I never want to wake up from."
+  ];
+  const PAGE_NAMES = [
+    "Inside My Heart", "Gallery", "Scrapbook", "Dreaming Clouds", ""
+  ];
+  const PAGES = ["home","inside","gallery","scrapbook","dream"];
+  let currentPage = 0;
+  function showPage(idx) {
+    document.querySelectorAll('.page').forEach((el,i) =>
+      el.classList.toggle('active', i === idx)
+    );
+    // Set next button label
+    let nextBtn = document.getElementById('next-btn');
+    if(idx < PAGES.length-1) {
+      nextBtn.innerHTML = PAGE_NAMES[idx] + " &rarr;";
+      nextBtn.disabled = false;
+      nextBtn.style.visibility = "visible";
+    } else {
+      nextBtn.style.visibility = "hidden";
+    }
+    // Letter typewriter trigger
+    if(PAGES[idx]==="letter") setTimeout(runTypewriter, 400);
+    if(PAGES[idx]==="dream") setTimeout(startCloudDreamAnimation, 200);
+    if(PAGES[idx]==="scrapbook") setTimeout(renderScrapbook, 200);
+  }
+  document.getElementById('next-btn').addEventListener('click', ()=>{
+    if(currentPage<PAGES.length-1) showPage(++currentPage);
+  });
+  showPage(currentPage);
+
+  // Gallery grid
+  const galleryGrid = document.querySelector('.gallery-grid');
+  if (galleryGrid) {
+    IMAGES.forEach(url => {
+      let img = document.createElement('img');
+      img.src = url;
+      img.alt = "Memory";
+      galleryGrid.appendChild(img);
+    });
+  }
+
+  // Scrapbook page
+  function renderScrapbook() {
+    const grid = document.getElementById('scrapbook-grid');
+    if (!grid || grid.childNodes.length > 2) return;
+    grid.innerHTML = '';
+    let imgCount = Math.min(IMAGES.length, SCRAPBOOK_MESSAGES.length);
+    for(let i=0; i<imgCount; i++) {
+      let frame = document.createElement('div');
+      frame.className = "scrapbook-img-frame";
+      let img = document.createElement('img');
+      img.src = IMAGES[i];
+      img.alt = "Scrapbook";
+      let cap = document.createElement('div');
+      cap.className = "scrapbook-caption";
+      cap.innerText = "Tap for note";
+      frame.appendChild(img);
+      frame.appendChild(cap);
+      frame.onclick = ()=>showScrapbookPopup(IMAGES[i], SCRAPBOOK_MESSAGES[i]);
+      grid.appendChild(frame);
+    }
+  }
+
+  // Scrapbook popup with cloud frame and full screen magical effect
+  function showScrapbookPopup(imgUrl, message) {
+    const popupBg = document.getElementById('popup-bg');
+    const popupImg = document.getElementById('popup-img');
+    const popupMsg = document.getElementById('popup-message');
+    popupImg.src = imgUrl;
+    popupMsg.innerHTML = message;
+    popupBg.classList.add('active');
+    // Add magical effect: heart shower
+    createHeartShower();
+  }
+  document.getElementById('popup-close').onclick = function() {
+    document.getElementById('popup-bg').classList.remove('active');
+    removeHeartShower();
+  };
+  document.getElementById('popup-bg').onclick = function(e) {
+    if(e.target === this) {
+      this.classList.remove('active');
+      removeHeartShower();
+    }
+  };
+  // Heart shower effect for popup
+  function createHeartShower() {
+    let shower = document.createElement('div');
+    shower.id = "heart-shower";
+    shower.style.position = "fixed";
+    shower.style.top = "0";
+    shower.style.left = "0";
+    shower.style.width = "100vw";
+    shower.style.height = "100vh";
+    shower.style.pointerEvents = "none";
+    shower.style.zIndex = "1011";
+    document.body.appendChild(shower);
+    let running = true;
+    function dropHeart() {
+      if(!running) return;
+      let heart = document.createElement('div');
+      heart.style.position = "absolute";
+      heart.style.left = `${Math.random()*98}vw`;
+      heart.style.top = `-40px`;
+      heart.style.fontSize = `${24+Math.random()*30}px`;
+      heart.style.opacity = 0.7+Math.random()*0.3;
+      heart.innerHTML = "❤️‍🩹";
+      let dur = 2.5+Math.random()*2.5;
+      heart.style.transition = `top ${dur}s linear, opacity ${dur}s`;
+      shower.appendChild(heart);
+      setTimeout(()=>{
+        heart.style.top = `96vh`;
+        heart.style.opacity = 0.1;
+      },50);
+      setTimeout(()=>{shower.removeChild(heart);},dur*1000+500);
+      if(running) setTimeout(dropHeart, 200+Math.random()*180);
+    }
+    dropHeart();
+    shower.ondestroy = ()=>{ running=false; };
+  }
+  function removeHeartShower() {
+    let shower = document.getElementById('heart-shower');
+    if(shower && shower.ondestroy) shower.ondestroy();
+    if(shower && shower.parentNode) shower.parentNode.removeChild(shower);
+  }
+
+  // Dreaming Clouds - animate images in cloud-shaped frames, changing every 2.5s
+  let cloudDreamInterval = null;
+  function startCloudDreamAnimation() {
+    const container = document.getElementById('clouds-gallery');
+    if (!container) return;
+    container.innerHTML = "";
+    const spots = [
+      {left:'8%',top:'35%'},{left:'28%',top:'10%'},{left:'55%',top:'7%'},
+      {left:'70%',top:'24%'},{left:'60%',top:'44%'},{left:'40%',top:'45%'},
+      {left:'20%',top:'57%'},{left:'75%',top:'68%'},{left:'51%',top:'67%'},
+      {left:'34%',top:'68%'},{left:'10%',top:'15%'},{left:'80%',top:'48%'}
+    ];
+    for(let i=0; i<spots.length; i++){
+      let spot = spots[i];
+      let frame = document.createElement('div');
+      frame.className = 'cloud-frame';
+      frame.style.left = spot.left;
+      frame.style.top = spot.top;
+      frame.style.zIndex = 2 + i;
+      frame.style.animationDelay = (Math.random()*2) + "s";
+      // cloud svg
+      let svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("class","cloud-frame-svg");
+      svg.setAttribute("viewBox","0 0 170 120");
+      svg.innerHTML = `<ellipse cx="90" cy="80" rx="70" ry="35" fill="#f4f5fa"/><ellipse cx="60" cy="60" rx="35" ry="23" fill="#f4f5fa" opacity="0.85"/><ellipse cx="120" cy="60" rx="30" ry="20" fill="#f4f5fa" opacity="0.85"/>`
+      let img = document.createElement('img');
+      img.className = "cloud-frame-img";
+      img.src = IMAGES[(i)%IMAGES.length];
+      img.alt = "Dream Memory";
+      frame.appendChild(svg);
+      frame.appendChild(img);
+      container.appendChild(frame);
+    }
+    let cc = document.createElement('div');
+    cc.className = "clouds-caption";
+    cc.innerHTML = "Dreams carry your memories gently, wrapped in clouds of hope and love.";
+    container.appendChild(cc);
+
+    if(cloudDreamInterval) clearInterval(cloudDreamInterval);
+    let t = 0;
+    cloudDreamInterval = setInterval(()=>{
+      let imgs = container.querySelectorAll('.cloud-frame-img');
+      let shuffled = IMAGES.slice().sort(()=>Math.random()-0.5);
+      for(let j=0;j<imgs.length;j++) {
+        imgs[j].src = shuffled[(j+t)%shuffled.length];
+      }
+      t++;
+    }, 2500);
+  }
+  // Floating Hearts Animation
+  const floatingHearts = document.querySelector('.floating-hearts');
+  function randomBetween(a,b){return Math.random()*(b-a)+a;}
+  function createHeart(){
+    let heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    let size = randomBetween(18,38);
+    heart.style.width = `${size}px`;
+    heart.style.height = `${size}px`;
+    heart.style.left = `${randomBetween(0,100)}vw`;
+    heart.style.animationDuration = `${randomBetween(6,14)}s`;
+    heart.style.filter = `blur(${randomBetween(0,1.2)}px)`;
+    heart.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 32 29.6"><path d="M23.6,0c-2.6,0-5,1.3-6.6,3.3C15.4,1.3,13,0,10.4,0C4.7,0,0,4.7,0,10.4c0,6.1,5.7,11,14.3,18.8l1.7,1.5l1.7-1.5C26.3,21.4,32,16.5,32,10.4C32,4.7,27.3,0,23.6,0z" fill="#ff6f91" /></svg>`;
+    floatingHearts.appendChild(heart);
+    setTimeout(()=>floatingHearts.removeChild(heart),16000);
+  }
+  setInterval(createHeart, 900);
+  // Petals Animation for Inside My Heart
+  const petalsDiv = document.querySelector('.petals');
+  if (petalsDiv) {
+    function createPetal() {
+      let p = document.createElement('div');
+      p.className = 'petal';
+      let size = randomBetween(8,22);
+      p.style.width = `${size}px`;
+      p.style.height = `${size*1.2}px`;
+      p.style.left = `${randomBetween(20,80)}%`;
+      p.style.animationDuration = `${randomBetween(5,11)}s`;
+      p.style.opacity = randomBetween(0.6,1);
+      petalsDiv.appendChild(p);
+      setTimeout(()=>petalsDiv.removeChild(p),12000);
+    }
+    setInterval(createPetal, 500);
+  }
+  // Petal/floating heart animation CSS
+  const styleSheet=document.createElement("style");
+  styleSheet.innerHTML=`
+  .petal{
+    position:absolute;
+    top:0;
+    background:linear-gradient(135deg,#ffb7c5 60%,#fff0 100%);
+    border-radius: 60% 40% 50% 50%/40% 60% 50% 50%;
+    opacity:0.8;
+    pointer-events:none;
+    animation:petal-fall linear;
+  }
+  @keyframes petal-fall{
+    0%{transform:translateY(0) rotate(0);}
+    100%{transform:translateY(120px) rotate(90deg);}
+  }
+  .floating-heart{
+    position:absolute;
+    bottom:-30px;
+    will-change:transform;
+    opacity:0.86;
+    animation:floatUp linear;
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(0) scale(1);}
+    80%{opacity:0.95;}
+    100%{transform:translateY(-110vh) scale(0.85); opacity:0;}
+  }
+  `;
+  document.head.appendChild(styleSheet);
+  const music = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('music-toggle');
+  musicBtn.onclick = () => {
+    if (music.paused) {
+      music.play();
+      musicBtn.textContent = "🔊";
+    } else {
+      music.pause();
+      musicBtn.textContent = "🔇";
+    }
+  };
+  music.addEventListener('play', () => musicBtn.textContent = "🔊");
+  music.addEventListener('pause', () => musicBtn.textContent = "🔇");
+
+  // ---- Letter page typewriter effect with calligraphy ----
+  const letterText = `Yaar ly kasa tri vattay ly athvun yete re tujhi brr pn nhi vatte tula sangycha v4krto but tujhi condition bghun asa vatta kasa explain kru me swatala baba la bollo me but baba bolle 2divas ajun kaam aahe so sry yaar i love you so much 🫂🫂🫂🫂 idk tu he read krshil ka nhi but i would like jr tu kelas he read tr
+
+There are so many unsaid things in my heart. I hope someday you feel the depth of these words, the longing, the gentle ache. I miss you every moment. You mean more to me than words or distance can ever describe. ❤️‍🩹`;
+  function runTypewriter() {
+    const tw = document.getElementById('typed-letter');
+    if(!tw) return;
+    tw.innerHTML = "";
+    let i = 0;
+    function type() {
+      if (i <= letterText.length) {
+        tw.innerHTML = letterText.substring(0, i)
+          .replace(/\n/g, "<br>");
+        i++;
+        let char = letterText.charAt(i-1);
+        let delay = 34 + Math.random() * 55;
+        if (char === "." || char === ",") delay += 130;
+        setTimeout(type, delay);
+      }
+    }
+    type();
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    showPage(currentPage);
+    if(PAGES[currentPage]==="letter") runTypewriter();
+  });
+  </script>
+</body>
+</html>
